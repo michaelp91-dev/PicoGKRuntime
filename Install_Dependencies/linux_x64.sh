@@ -5,7 +5,7 @@
 # use apt for most packages
 sudo apt update
 sudo apt install \
-    build-essential \
+    wget build-essential \
     libx11-dev \
     libxrandr-dev \
     libxinerama-dev \
