@@ -11,7 +11,8 @@ sudo apt-add-repository ppa:dotnet/backports -y
 # use apt for most packages
 sudo apt update
 sudo apt install -y \
-    wget build-essential \
+    wget \
+    build-essential \
     libx11-dev \
     libxrandr-dev \
     libxinerama-dev \
