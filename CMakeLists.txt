@@ -92,6 +92,8 @@ set( USE_EXPLICIT_INSTANTIATION OFF )
 #enable position independent code
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+set(CMAKE_BUILD_TYPE Release)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 #use release TBB for both debug and release configs
