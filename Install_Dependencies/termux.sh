@@ -12,25 +12,25 @@ pkg install -y \
     make \
     clang \
     clang-tools \
-    cmake \ # Install cmake from termux repos. Version check unnecessary as Termux updates regularly
+    cmake \ 
     libx11 \
     libxrandr \
     libxinerama \
     libxcursor \
     libxi \
-    boost \  # Installs latest version, adjust as needed. No version specified, so general 'boost' is OK.
-    tbb \    # Latest version
+    boost \  
+    tbb \    
     openssl \
-    zeromq \ # Latest version
-    jemalloc \ # Latest version
-    blosc \  # Latest version
+    zeromq \ 
+    jemalloc \
+    blosc \  
     doxygen \
-    qt5-default \ # Installs Qt5 libraries and tools.  Equivalent to cmake-qt-gui, and required for building.
-    dotnet-sdk-7.0 \ # .NET 7.0.  This may need to be adjusted depending on available Termux packages.  Check with `pkg search dotnet`
+    qt5-default \ 
+    dotnet-sdk-7.0 \ 
     wayland \
     wayland-protocols \
     pkg-config \
     libxkbcommon \
-    llvm # Installs LLVM, sometimes required by build tools, clang
+    llvm 
 
 echo "Dependencies installation complete"
