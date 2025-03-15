@@ -25,6 +25,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Debug: List the contents of the $HOME/build directory
+echo "Contents of $HOME/build after extraction:"
+ls -l "$HOME/build"
+
 # Rename extracted directory to a consistent name (handle potential variations)
 EXTRACTED_DIR="libxkbcommon-$XKBCOMMON_VERSION"  #Standard name
 if [ ! -d "$EXTRACTED_DIR" ]; then
@@ -38,18 +42,7 @@ mkdir -p build
 cd build
 
 # Simplify CMake command for better Termux compatibility
-cmake -Wno-dev \
-    -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
-    -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" \
-    -DWITH_XCB=ON \
-    -DWITH_X11=ON \
-    -DWITH_WAYLAND=ON \
-    -DWITH_DOCUMENTATION=OFF \
-    -Denable-docs=false \
-    -Denable-wayland=true \
-    ..
+cmake -Wno-dev -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" -DCMAKE_BUILD_TYPE=Release -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" -DWITH_XCB=ON -DWITH_X11=ON -DWITH_WAYLAND=ON -DWITH_DOCUMENTATION=OFF -Denable-docs=false -Denable-wayland=true ..
 
 #check cmake exit code
 if [ $? -ne 0 ]; then
