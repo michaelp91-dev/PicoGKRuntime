@@ -24,56 +24,51 @@ search_package() {
     pkg search "$search_term"
 }
 
-# Install necessary packages.  Using pkg search to find the correct names.
-echo "Searching for clang-tools..."
-search_package "clang tools" # Added quotes for multi-word search
-if install_package clang-tools; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# Install necessary packages. Using pkg search to find the correct names.
+# Only search if the package hasn't been successfully installed yet.
 
-echo "Searching for libxinerama..."
-search_package libxinerama-dev
-if install_package libxinerama-dev; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+#clang tools
+if ! install_package clang-tools; then #if install fails, search
+  echo "Searching for clang-tools..."
+  search_package clang
+fi
 
-echo "Searching for libxcursor..."
-search_package libxcursor-dev
-if install_package libxcursor-dev; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# libxinerama
+if ! install_package libxinerama-dev; then #if install fails, search
+  echo "Searching for libxinerama..."
+  search_package xinerama
+fi
 
-echo "Searching for tbb..."
-search_package tbb
-if install_package libtbb; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# libxcursor
+if ! install_package libxcursor-dev; then #if install fails, search
+  echo "Searching for libxcursor..."
+  search_package xcursor
+fi
 
-echo "Searching for zeromq..."
-search_package zeromq #If this fails, change to libzmq or libczmq depending on further inspection
-if install_package zeromq; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# zeromq. Success = libzmq
+if ! install_package libzmq; then #if install fails, search
+  echo "Searching for zeromq..."
+  search_package zmq
+fi
 
-echo "Searching for jemalloc..."
-search_package jemalloc
-if install_package libjemalloc; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# libjemalloc
+if ! install_package libjemalloc; then #if install fails, search
+  echo "Searching for libjemalloc..."
+  search_package malloc
+fi
 
-echo "Searching for blosc..."
-search_package blosc
-if install_package libblosc; then :; else echo "Please manually inspect pkg search results and adjust."; fi
+# qt5. Removed, so skip for now.
+#echo "Searching for qt5-default..."
+#search_package qt5 # search qt5 instead of qt5-default
+#if install_package qt5-default; then :; else echo "Please manually inspect pkg search results and adjust."; fi
 
-echo "Searching for qt5-default..."
-search_package qt5 # search qt5 instead of qt5-default
-if install_package qt5-default; then :; else echo "Please manually inspect pkg search results and adjust."; fi # If qt5-default not found, skip package for now
+# libxkbcommon
+if ! install_package libxkbcommon; then #if install fails, search
+  echo "Searching for libxkbcommon..."
+  search_package bcommon
+fi
 
-echo "Searching for dotnet-sdk-8.0..."
-search_package dotnet-sdk-8.0
-if install_package dotnet-sdk-8.0; then :; else echo "Please manually inspect pkg search results and adjust."; fi
-
-echo "Searching for wayland..."
-search_package wayland
-if install_package libwayland; then :; else echo "Please manually inspect pkg search results and adjust."; fi
-
-echo "Searching for wayland-protocols..."
-search_package wayland-protocols
-if install_package libwayland-protocols; then :; else echo "Please manually inspect pkg search results and adjust."; fi
-
-echo "Searching for libxkbcommon..."
-search_package libxkbcommon-dev
-if install_package libxkbcommon-dev; then :; else echo "Please manually inspect pkg search results and adjust."; fi
-
-# Basic packages
+# These are unlikely to fail because most should already be there but install anyway.
 install_package wget
 install_package make
 install_package clang
@@ -84,5 +79,8 @@ install_package boost
 install_package openssl
 install_package pkg-config
 install_package llvm
-
-echo "Dependencies installation attempt complete.  Please review the output for errors and warnings."
+install_package libtbb
+install_package libblosc
+install_package dotnet-sdk-8.0
+install_package libwayland
+install_package libwayland-protocols
