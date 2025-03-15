@@ -25,12 +25,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Debug: List the contents of the $HOME/build directory
-echo "Contents of $HOME/build after extraction:"
-ls -l "$HOME/build"
-
-# Rename extracted directory to a consistent name (handle potential variations)
-EXTRACTED_DIR="libxkbcommon-$XKBCOMMON_VERSION"  #Standard name
+# Correctly identify extracted directory name
+EXTRACTED_DIR="libxkbcommon-xkbcommon-$XKBCOMMON_VERSION"  # The ACTUAL extracted directory name
 if [ ! -d "$EXTRACTED_DIR" ]; then
     echo "Error: Extracted directory '$EXTRACTED_DIR' not found.  Please check the extracted directory name."
     exit 1
