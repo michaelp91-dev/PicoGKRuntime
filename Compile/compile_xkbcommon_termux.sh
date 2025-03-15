@@ -18,12 +18,26 @@ cd "$HOME/build"
 XKBCOMMON_VERSION="1.8.1" # From Termux build script
 wget "https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-$XKBCOMMON_VERSION.tar.gz" -O libxkbcommon-$XKBCOMMON_VERSION.tar.gz
 
+# Extract tarball and handle potential errors
 tar -xf libxkbcommon-$XKBCOMMON_VERSION.tar.gz
-cd libxkbcommon-$XKBCOMMON_VERSION
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to extract libxkbcommon tarball."
+    exit 1
+fi
+
+# Rename extracted directory to a consistent name (handle potential variations)
+EXTRACTED_DIR="libxkbcommon-$XKBCOMMON_VERSION"  #Standard name
+if [ ! -d "$EXTRACTED_DIR" ]; then
+    echo "Error: Extracted directory '$EXTRACTED_DIR' not found.  Please check the extracted directory name."
+    exit 1
+fi
+
+cd "$EXTRACTED_DIR"
 
 mkdir -p build
 cd build
 
+# Simplify CMake command for better Termux compatibility
 cmake -Wno-dev \
     -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
     -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" \
@@ -31,11 +45,26 @@ cmake -Wno-dev \
     -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" \
     -DWITH_XCB=ON \
     -DWITH_X11=ON \
-    -DWITH_WAYLAND=ON \ # Enable Wayland support (from Termux script)
+    -DWITH_WAYLAND=ON \
     -DWITH_DOCUMENTATION=OFF \
-    -Denable-docs=false \ # From Termux script
-    -Denable-wayland=true \ # From Termux script
+    -Denable-docs=false \
+    -Denable-wayland=true \
     ..
 
+#check cmake exit code
+if [ $? -ne 0 ]; then
+  echo "Cmake command failed."
+  exit 1
+fi
+
 make -j$(nproc)
+if [ $? -ne 0 ]; then
+  echo "Make command failed"
+  exit 1
+fi
+
 make install
+if [ $? -ne 0 ]; then
+  echo "Make install failed."
+  exit 1
+fi
