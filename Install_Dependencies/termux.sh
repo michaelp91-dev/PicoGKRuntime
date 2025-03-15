@@ -57,19 +57,4 @@ if ! install_package libxkbcommon; then #if install fails, search
 fi
 
 # These are unlikely to fail because most should already be there but install anyway.
-install_package wget
-install_package make
-install_package clang
-install_package libx11
-install_package libxrandr
-install_package libxi
-install_package libzmq
-install_package boost
-install_package openssl
-install_package pkg-config
-install_package llvm
-install_package libtbb
-install_package libblosc
-install_package dotnet-sdk-8.0
-install_package libwayland
-install_package libwayland-protocols
+pkg install -y wget make clang libx11 libxrandr libxi libzmq boost openssl pkg-config llvm libtbb libblosc dotnet-sdk-8.0 libwayland libwayland-protocols
