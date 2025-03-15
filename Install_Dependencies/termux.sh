@@ -27,12 +27,6 @@ search_package() {
 # Install necessary packages. Using pkg search to find the correct names.
 # Only search if the package hasn't been successfully installed yet.
 
-#clang tools
-if ! install_package clang-tools; then #if install fails, search
-  echo "Searching for clang-tools..."
-  search_package clang
-fi
-
 # libxinerama
 if ! install_package libxinerama-dev; then #if install fails, search
   echo "Searching for libxinerama..."
@@ -45,12 +39,6 @@ if ! install_package libxcursor-dev; then #if install fails, search
   search_package xcursor
 fi
 
-# zeromq. Success = libzmq
-if ! install_package libzmq; then #if install fails, search
-  echo "Searching for zeromq..."
-  search_package zmq
-fi
-
 # libjemalloc
 if ! install_package libjemalloc; then #if install fails, search
   echo "Searching for libjemalloc..."
@@ -58,8 +46,8 @@ if ! install_package libjemalloc; then #if install fails, search
 fi
 
 # qt5. Removed, so skip for now.
-#echo "Searching for qt5-default..."
-#search_package qt5 # search qt5 instead of qt5-default
+echo "Searching for qt5-default..."
+search_package qt5 # search qt5 instead of qt5-default
 #if install_package qt5-default; then :; else echo "Please manually inspect pkg search results and adjust."; fi
 
 # libxkbcommon
@@ -75,6 +63,7 @@ install_package clang
 install_package libx11
 install_package libxrandr
 install_package libxi
+install_package libzmq
 install_package boost
 install_package openssl
 install_package pkg-config
