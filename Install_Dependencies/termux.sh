@@ -24,7 +24,11 @@ search_package jemalloc
 echo "Searching for xinerama related packages..."
 search_package xinerama
 
+# libxkbcommon
+echo "Searching for libxkbcommon related packages..."
+search_package libxkbcommon
+
 # Install packages directly
-pkg install -y wget make clang libx11 libxrandr libxi boost openssl pkg-config llvm libtbb libblosc dotnet-sdk-8.0 libwayland libwayland-protocols libzmq libxkbcommon
+pkg install -y wget make clang libx11 libxrandr libxi boost openssl pkg-config llvm libtbb libblosc dotnet-sdk-8.0 libwayland libwayland-protocols libzmq
 
 echo "Dependencies installation attempt complete. Please review the output for errors and warnings."
