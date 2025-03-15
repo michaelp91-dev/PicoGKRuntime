@@ -7,7 +7,7 @@ pkg update -y
 pkg upgrade -y
 
 # Install build dependencies for libxkbcommon
-pkg install -y cmake ninja libxcb libxml2 libwayland xkeyboard-config libwayland-protocols xorg-util-macros
+pkg install -y build-essential libxcb libxml2 libwayland xkeyboard-config libwayland-protocols xorg-util-macros meson
 
 # Build libxkbcommon from source
 echo "Attempting to build libxkbcommon from source..."
@@ -27,62 +27,40 @@ fi
 
 # Correctly identify extracted directory name
 EXTRACTED_DIR="libxkbcommon-xkbcommon-$XKBCOMMON_VERSION"  # The ACTUAL extracted directory name
-
-# Debug: Verify directory existence and permissions
-echo "Checking if directory '$EXTRACTED_DIR' exists..."
-if [ -d "$EXTRACTED_DIR" ]; then
-    echo "Directory '$EXTRACTED_DIR' exists."
-    echo "Permissions of '$EXTRACTED_DIR':"
-    ls -l "$EXTRACTED_DIR"
-else
-    echo "Error: Directory '$EXTRACTED_DIR' not found."
+if [ ! -d "$EXTRACTED_DIR" ]; then
+    echo "Error: Extracted directory '$EXTRACTED_DIR' not found."
     exit 1
 fi
 
 cd "$EXTRACTED_DIR"
 
-# Debug: Verify that CMakeLists.txt exists
-echo "Checking if CMakeLists.txt exists in '$EXTRACTED_DIR'..."
-if [ -f "CMakeLists.txt" ]; then
-    echo "CMakeLists.txt exists."
-    echo "Permissions of CMakeLists.txt:"
-    ls -l CMakeLists.txt
-else
-    echo "Error: CMakeLists.txt not found in '$EXTRACTED_DIR'."
-    exit 1
-fi
-
+# Build with meson
 mkdir -p build
 cd build
 
-# Simplify CMake command and point to the source directory
-cmake -Wno-dev \
-    -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
-    -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" \
-    -DWITH_XCB=ON \
-    -DWITH_X11=ON \
-    -DWITH_WAYLAND=ON \
-    -DWITH_DOCUMENTATION=OFF \
-    -Denable-docs=false \
-    -Denable-wayland=true \
-    "$HOME/build/$EXTRACTED_DIR"
+# Configure with meson
+meson setup -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" -Denable-docs=false -Denable-wayland=true ..
 
-#check cmake exit code
+# Check meson setup exit code
 if [ $? -ne 0 ]; then
-  echo "Cmake command failed."
-  exit 1
+    echo "Meson setup failed."
+    exit 1
 fi
 
-make -j$(nproc)
+# Build with meson
+meson compile -j$(nproc)
+
+# Check meson compile exit code
 if [ $? -ne 0 ]; then
-  echo "Make command failed"
-  exit 1
+    echo "Meson compile failed."
+    exit 1
 fi
 
-make install
+# Install with meson
+meson install
+
+# Check meson install exit code
 if [ $? -ne 0 ]; then
-  echo "Make install failed."
-  exit 1
+    echo "Meson install failed."
+    exit 1
 fi
