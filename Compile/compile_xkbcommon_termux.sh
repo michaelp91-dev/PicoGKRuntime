@@ -27,12 +27,30 @@ fi
 
 # Correctly identify extracted directory name
 EXTRACTED_DIR="libxkbcommon-xkbcommon-$XKBCOMMON_VERSION"  # The ACTUAL extracted directory name
-if [ ! -d "$EXTRACTED_DIR" ]; then
-    echo "Error: Extracted directory '$EXTRACTED_DIR' not found.  Please check the extracted directory name."
+
+# Debug: Verify directory existence and permissions
+echo "Checking if directory '$EXTRACTED_DIR' exists..."
+if [ -d "$EXTRACTED_DIR" ]; then
+    echo "Directory '$EXTRACTED_DIR' exists."
+    echo "Permissions of '$EXTRACTED_DIR':"
+    ls -l "$EXTRACTED_DIR"
+else
+    echo "Error: Directory '$EXTRACTED_DIR' not found."
     exit 1
 fi
 
 cd "$EXTRACTED_DIR"
+
+# Debug: Verify that CMakeLists.txt exists
+echo "Checking if CMakeLists.txt exists in '$EXTRACTED_DIR'..."
+if [ -f "CMakeLists.txt" ]; then
+    echo "CMakeLists.txt exists."
+    echo "Permissions of CMakeLists.txt:"
+    ls -l CMakeLists.txt
+else
+    echo "Error: CMakeLists.txt not found in '$EXTRACTED_DIR'."
+    exit 1
+fi
 
 mkdir -p build
 cd build
@@ -49,7 +67,7 @@ cmake -Wno-dev \
     -DWITH_DOCUMENTATION=OFF \
     -Denable-docs=false \
     -Denable-wayland=true \
-    "$HOME/build/$EXTRACTED_DIR"  # Specify the source directory explicitly
+    "$HOME/build/$EXTRACTED_DIR"
 
 #check cmake exit code
 if [ $? -ne 0 ]; then
