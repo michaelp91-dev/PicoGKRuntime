@@ -37,8 +37,19 @@ cd "$EXTRACTED_DIR"
 mkdir -p build
 cd build
 
-# Simplify CMake command for better Termux compatibility
-cmake -Wno-dev -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" -DCMAKE_BUILD_TYPE=Release -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" -DWITH_XCB=ON -DWITH_X11=ON -DWITH_WAYLAND=ON -DWITH_DOCUMENTATION=OFF -Denable-docs=false -Denable-wayland=true ..
+# Simplify CMake command and point to the source directory
+cmake -Wno-dev \
+    -DCMAKE_INSTALL_PREFIX:PATH="${PREFIX}" \
+    -DCMAKE_TOOLCHAIN_FILE="${PREFIX}/share/cmake/OEToolchainConfig.cmake" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DXKB_COMPOSE_INSTALL_PREFIX:PATH="${PREFIX}" \
+    -DWITH_XCB=ON \
+    -DWITH_X11=ON \
+    -DWITH_WAYLAND=ON \
+    -DWITH_DOCUMENTATION=OFF \
+    -Denable-docs=false \
+    -Denable-wayland=true \
+    "$HOME/build/$EXTRACTED_DIR"  # Specify the source directory explicitly
 
 #check cmake exit code
 if [ $? -ne 0 ]; then
