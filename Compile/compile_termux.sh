@@ -1,9 +1,6 @@
 #!/bin/bash
 
-cd PicoGKRuntime/GLFW/
-cmake -DGLFW_BUILD_X11=OFF
-
-cd ..
+cd PicoGKRuntime
 mkdir termux_build
 sed -i '/project(OpenVDB)/a set(CMAKE_POSITION_INDEPENDENT_CODE ON)' openvdb/CMakeLists.txt
 sed -i '/project(OpenVDB)/a set(BUILD_SHARED_LIBS ON)' openvdb/CMakeLists.txt
