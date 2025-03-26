@@ -12,23 +12,12 @@ search_package() {
     pkg search "$search_term"
 }
 
-# libxcursor
-echo "Searching for xcursor related packages..."
-search_package xcursor
 
 # libjemalloc
 echo "Searching for jemalloc related packages..."
 search_package jemalloc
 
-# libxinerama
-echo "Searching for xinerama related packages..."
-search_package xinerama
-
-# libxkbcommon
-echo "Searching for libxkbcommon related packages..."
-search_package libxkbcommon
-
 # Install packages directly
-pkg install -y wget cmake make clang libx11 libxrandr libxi boost openssl pkg-config llvm libtbb libblosc dotnet-sdk-8.0 libwayland libwayland-protocols libzmq
+pkg install -y wget cmake make clang libx11 libxrandr libxi boost openssl pkg-config llvm libtbb libblosc dotnet-sdk-8.0 libwayland libwayland-protocols libzmq libxcursor libxkbcommon libxinerama
 
 echo "Dependencies installation attempt complete. Please review the output for errors and warnings."
