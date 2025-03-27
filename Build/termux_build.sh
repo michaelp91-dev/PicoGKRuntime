@@ -24,4 +24,4 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DBOOST_ROOT=$PREFIX \
       ..
 
-make VERBOSE=1
+make
