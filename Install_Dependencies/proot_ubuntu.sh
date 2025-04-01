@@ -12,7 +12,7 @@ apt install \
     libxinerama-dev \
     libxcursor-dev \
     libxi-dev \
-    libboost1.83-dev \
+    libboost-dev \
     libtbb-dev \
     libssl-dev \
     libzmq3-dev \
