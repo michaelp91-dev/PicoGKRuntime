@@ -32,7 +32,8 @@ apt install -y \
     wayland-protocols \
     pkg-config \
     libxkbcommon-dev \
-    clang
+    clang \
+    zlib1g-dev
 
 # Install cmake 3.27.7 from binary. The system version is retained.
 required_version="3.27.7"
