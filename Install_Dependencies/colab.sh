@@ -18,7 +18,7 @@ sudo apt install -y \
     libxinerama-dev \
     libxcursor-dev \
     libxi-dev \
-    libboost-iostreams1.83-dev \
+    libboost-iostreams1.74-dev \
     libtbb-dev \
     libssl-dev \
     libzmq3-dev \
