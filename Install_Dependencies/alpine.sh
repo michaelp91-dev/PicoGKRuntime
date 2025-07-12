@@ -14,14 +14,14 @@ apk add --no-cache \
     libxcursor-dev \
     libxi-dev \
     boost-dev \
-    tbb-dev \
+    onetbb-dev \
     openssl-dev \
     zeromq-dev \
     jemalloc-dev \
     blosc-dev \
     doxygen \
     cmake \
-    dotnet7-sdk \
+    dotnet8-sdk \
     wayland-dev \
     wayland-protocols \
     pkgconf \
