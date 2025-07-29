@@ -2,6 +2,12 @@
 
 # install dependencies of PicoGKRuntime
 set -e
+wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
+
+sudo apt update
+sudo apt install -y dotnet-sdk-8.0
 
 # install apt-add-repository and add dotnet/backtrace repo
 sudo apt update
@@ -27,7 +33,8 @@ sudo apt install -y \
     wayland-protocols \
     pkg-config \
     libxkbcommon-dev \
-    clang
+    clang \
+    zlib1g-dev
 
 # Install cmake 3.27.7 from binary. The system version is retained.
 required_version="3.27.7"
