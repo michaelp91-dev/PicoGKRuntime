@@ -37,7 +37,7 @@ sudo apt install -y \
     zlib1g-dev
 
 wget https://github.com/Kitware/CMake/releases/download/v4.1.0-rc3/cmake-4.1.0-rc3-linux-x86_64.tar.gz
-sudo mkdir /opt/cmake
-sudo tar -xzf cmake-4.1.0-rc3-linux-x86_64.tar.gz /opt/cmake --strip-components=1
+sudo mkdir -p /opt/cmake
+sudo tar -xzf cmake-4.1.0-rc3-linux-x86_64.tar.gz -C /opt/cmake --strip-components=1
 echo 'export PATH="/opt/cmake/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
