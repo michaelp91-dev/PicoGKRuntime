@@ -2,12 +2,6 @@
 
 # install dependencies of PicoGKRuntime
 set -e
-wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-sudo dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-
-sudo apt update
-sudo apt install -y dotnet-sdk-8.0
 
 # install apt-add-repository and add dotnet/backtrace repo
 sudo apt update
@@ -35,6 +29,16 @@ sudo apt install -y \
     libxkbcommon-dev \
     clang \
     zlib1g-dev
+
+wget https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.413/dotnet-sdk-8.0.413-linux-arm64.tar.gz
+DOTNET_FILE=dotnet-sdk-8.0.413-linux-arm64.tar.gz
+export DOTNET_ROOT=$(pwd)/.dotnet
+
+mkdir -p "$DOTNET_ROOT" && tar zxf "$DOTNET_FILE" -C "$DOTNET_ROOT"
+
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
+echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc    
 
 wget https://github.com/Kitware/CMake/releases/download/v4.1.0-rc3/cmake-4.1.0-rc3-linux-x86_64.tar.gz
 sudo mkdir -p /opt/cmake
