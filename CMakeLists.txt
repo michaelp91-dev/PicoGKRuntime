@@ -6,7 +6,7 @@
 #
 # For more information, please visit https://picogk.org
 #
-# PicoGK is developed and maintained by LEAP 71 - © 2023-2024 by LEAP 71
+# PicoGK is developed and maintained by LEAP 71 - © 2023-2025 by LEAP 71
 # https://leap71.com
 #
 # Computational Engineering will profoundly change our physical world in the
@@ -33,7 +33,7 @@
 # limitations under the License.
 #
 
-cmake_minimum_required(VERSION 3.27.4)
+cmake_minimum_required(VERSION 3.25.1)
 
 # Define the version
 set(LIB_VERSION_MAJOR 1)
@@ -44,6 +44,7 @@ set(LIB_VERSION "${LIB_VERSION_MAJOR}.${LIB_VERSION_MINOR}.${LIB_VERSION_SUBMINO
 cmake_policy( SET CMP0091 NEW ) #enable MSVC_RUNTIME_LIBRARY property
 cmake_policy( SET CMP0042 NEW ) #enable MACOSX_RPATH
 set( CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL" )
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 project(PicoGK VERSION ${LIB_VERSION})
 
@@ -202,7 +203,7 @@ add_custom_command(
 add_custom_command(
     TARGET ${LIB_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_BINARY_DIR}/Lib
+        ${CMAKE_BINARY_DIR}/lib
         ${CMAKE_CURRENT_SOURCE_DIR}/Dist
     COMMENT "Copying library files to Dist folder"
 )
