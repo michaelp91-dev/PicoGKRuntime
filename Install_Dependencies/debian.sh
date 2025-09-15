@@ -28,7 +28,8 @@ sudo apt install -y \
     pkg-config \
     libxkbcommon-dev \
     clang \
-    zlib1g-dev
+    zlib1g-dev \
+    cmake
 
 wget https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.413/dotnet-sdk-8.0.413-linux-arm64.tar.gz
 DOTNET_FILE=dotnet-sdk-8.0.413-linux-arm64.tar.gz
@@ -39,9 +40,3 @@ mkdir -p "$DOTNET_ROOT" && tar zxf "$DOTNET_FILE" -C "$DOTNET_ROOT"
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
 echo 'export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools' >> ~/.bashrc    
-
-wget https://github.com/Kitware/CMake/releases/download/v4.1.0-rc3/cmake-4.1.0-rc3-linux-x86_64.tar.gz
-sudo mkdir -p /opt/cmake
-sudo tar -xzf cmake-4.1.0-rc3-linux-x86_64.tar.gz -C /opt/cmake --strip-components=1
-echo 'export PATH="/opt/cmake/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
